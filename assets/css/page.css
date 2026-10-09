@@ -331,3 +331,11 @@ input:focus, textarea:focus { outline: none; border-color: var(--bleu); box-shad
   *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; }
   .js [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* Bandeau cookies du pixel Meta : « Refuser » aussi visible que « Accepter » */
+.cookies { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 90; max-width: 34rem; margin: 0 auto; background: var(--papier); color: var(--encre); border: 1px solid var(--trait); border-radius: 14px; padding: 14px 16px; box-shadow: 0 18px 50px -20px rgba(6, 41, 90, .45); font-size: 15px; line-height: 1.45; }
+.cookies[hidden] { display: none; }
+.cookies-btns { display: flex; gap: 10px; margin-top: 12px; }
+.cookies-btns button { flex: 1; min-height: 46px; border-radius: 10px; border: 1.5px solid var(--bleu); background: var(--papier); color: var(--bleu); font: inherit; font-weight: 800; cursor: pointer; }
+.cookies-btns button:hover { background: var(--bleu-clair); }
+.cookies-btns button:focus-visible { outline: 3px solid var(--bleu); outline-offset: 2px; }

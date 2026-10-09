@@ -278,6 +278,7 @@
     form.hidden = true;
     ["formulaire-intro", "progression", "etape-compteur"].forEach((c) => montrer(document.querySelector(`.${c}`), false));
     merci.hidden = false;
+    if (window.mesurerDemande) window.mesurerDemande(); // pixel Meta : événement Lead, seulement si le visiteur a accepté
     merci.focus();
     merci.scrollIntoView({ block: "center", behavior: calme ? "auto" : "smooth" });
   }
