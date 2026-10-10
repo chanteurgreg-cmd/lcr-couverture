@@ -8,7 +8,8 @@
   // Clé PUBLIQUE du projet (faite pour vivre dans le navigateur, la même que celle du bureau) : ce n'est pas un secret.
   const CLE_PUBLIQUE = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhydHBxc2RkeHd5aXBxZnRxcmdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1ODY4NDgsImV4cCI6MjEwMjE2Mjg0OH0.rLZUEvWJDRaeDLY494R4e6tKB_VPt3R89gOuUyeDwvw";
   const PAGE = "lcr-toiture";               // identifiant de la page, reconnu par la fonction
-  const ETAPES = 6;
+  // Nombre de questions = nombre d'étapes dans la page (10/10/2026 : question budget retirée, 6 → 5)
+  const ETAPES = document.querySelectorAll("#demande .etape").length || 5;
   // Rendez-vous réservés par la personne : jours et créneaux proposés (à caler sur l'agenda réel de Mathieu)
   const JOURS_VISITE = [1, 2, 3, 4, 5];     // lundi à vendredi (0 = dimanche, 6 = samedi)
   const NB_JOURS = 10;                      // jours proposés, à partir de demain
@@ -115,7 +116,6 @@
   const retour = form.querySelector(".retour");
   const erreur = form.querySelector(".erreur");
   const infoZone = form.querySelector('[data-info="hors-zone"]');
-  const infoBudget = form.querySelector('[data-info="budget-non"]');
   const bouton = form.querySelector(".envoyer");
   const merci = document.querySelector(".merci");
   const agenda = form.querySelector(".agenda");
@@ -178,6 +178,7 @@
       creneauChoisi = "";
     }
     if (nom === "jour" || nom === "creneau") { agendaOk.disabled = !(valeur("jour") && valeur("creneau")); return; }
+    // « budget » reste dans la liste sans effet : la question n'est plus dans la page
     if (["travaux", "departement", "delai", "budget", "rdv"].includes(nom)) setTimeout(() => aller(courante + 1), calme ? 0 : 260);
   });
 
@@ -201,7 +202,7 @@
   agendaOk.addEventListener("click", () => {
     if (!valeur("jour") || !valeur("creneau")) return;
     creneauChoisi = `${valeur("jour")}, ${valeur("creneau").replace(/ /g, " ")}`;
-    aller(6);
+    aller(ETAPES);
   });
 
 
@@ -277,7 +278,6 @@
         "Département": valeur("departement"),
         "Travaux": valeur("travaux"),
         "Délai": valeur("delai"),
-        "Budget": valeur("budget"),
         "Rendez-vous": valeur("rdv") === "creneau" && creneauChoisi ? `Créneau choisi : ${creneauChoisi}` : "Rappel dans l'heure pour fixer la visite",
         "Présence": "S'engage à décrocher et à être présent le jour de la visite",
         "Précisions": champ("precisions"),
