@@ -154,9 +154,13 @@
     }
   }
 
+  // Dernière réponse connue de chaque question : sert à savoir si un toucher retombe sur la réponse déjà cochée
+  const derniers = {};
+
   // Un choix fait passer à la question suivante (sauf hors zone, où l'on s'arrête poliment)
   form.addEventListener("change", (e) => {
     const nom = e.target.name;
+    derniers[nom] = e.target.value;
     montrer(erreur, false);
     if (nom === "departement") {
       const dep = valeur("departement");
@@ -202,6 +206,36 @@
 
 
   retour.addEventListener("click", () => aller(Math.max(1, courante - 1)));
+
+  // 10/10/2026 : après « Question précédente », retoucher la réponse déjà cochée ne déclenche aucun « change ».
+  // On avance quand même, sinon la personne reste bloquée sur la question.
+  form.addEventListener("click", (e) => {
+    const r = e.target;
+    if (!(r instanceof HTMLInputElement) || r.type !== "radio" || derniers[r.name] !== r.value) return;
+    if (Number(r.closest(".etape")?.dataset.etape) !== courante) return;
+    if (!["travaux", "departement", "delai", "budget", "rdv"].includes(r.name)) return;
+    if (r.name === "departement" && !ZONE.includes(r.value)) return;
+    if (r.name === "rdv" && r.value === "creneau") return;
+    setTimeout(() => aller(courante + 1), calme ? 0 : 260);
+  });
+
+  // 10/10/2026 : la question 1 est aussi en haut de page. Un toucher coche la réponse dans le formulaire,
+  // puis la page descend au formulaire, sur la question 2 (ou là où la personne en était).
+  const departs = [...document.querySelectorAll(".depart [data-travaux]")];
+  departs.forEach((lien) => {
+    lien.addEventListener("click", (e) => {
+      const radio = [...form.elements.travaux].find((r) => r.value === lien.dataset.travaux);
+      if (!radio || form.hidden) return;   // demande déjà envoyée : simple lien vers le formulaire
+      e.preventDefault();
+      radio.checked = true;
+      derniers.travaux = radio.value;
+      departs.forEach((l) => l.classList.toggle("choisi", l === lien));
+      if (courante === 1) aller(2);
+      // On s'arrête juste au-dessus du cadre blanc : la question 2 et toutes ses réponses tiennent à l'écran
+      const cadre = formulaire.querySelector(".formulaire-cadre") || formulaire;
+      setTimeout(() => window.scrollTo({ top: cadre.getBoundingClientRect().top + window.scrollY - 12, behavior: calme ? "auto" : "smooth" }), calme ? 0 : 200);
+    });
+  });
 
   // 06 12 34 56 78, 0612345678 ou +33 6 12 34 56 78 → 0612345678
   const telNormal = (t) => {
