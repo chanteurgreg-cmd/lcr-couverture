@@ -78,6 +78,34 @@ h1 span { display: block; color: #BFD6F7; }
 .garanties li { display: flex; align-items: center; gap: 7px; }
 .garanties li::before { content: ""; width: 14px; height: 8px; border-left: 2.5px solid #fff; border-bottom: 2.5px solid #fff; transform: rotate(-45deg) translateY(-2px); }
 
+/* Question 1 dès l'ouverture (10/10/2026) : mêmes tuiles que le formulaire, en blanc sur le bleu.
+   Sur mobile, la vidéo est plus courte et la question passe avant le chapeau : on répond sans faire défiler. */
+.depart { margin: 0 0 4px; }
+.depart-titre { margin: 0 0 10px; font: 800 22px/1.2 "Manrope", sans-serif; color: #fff; }
+.depart-titre small { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #BFD6F7; }
+.depart-choix { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.depart-choix a {
+  position: relative; display: flex; align-items: center; min-height: 52px; padding: 9px 10px 9px 38px; border-radius: 12px;
+  background: #fff; color: var(--encre); font-size: 15px; font-weight: 600; line-height: 1.25; text-decoration: none;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22); transition: transform 160ms var(--sortie), background-color 160ms ease;
+}
+.depart-choix a::before { content: ""; position: absolute; left: 12px; top: 50%; width: 18px; height: 18px; margin-top: -9px; border-radius: 50%; border: 2px solid #AEB8CC; background: #fff; transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease; }
+.depart-choix a:hover { background: var(--bleu-clair); }
+.depart-choix a:active { transform: scale(0.98); }
+.depart-choix a.choisi { background: var(--bleu-clair); }
+.depart-choix a.choisi::before { border-color: var(--bleu); background: var(--bleu); box-shadow: inset 0 0 0 4px #fff; }
+.depart-choix a:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.depart-choix a:focus-visible { outline: 3px solid #BFD6F7; outline-offset: 2px; }
+.ouverture .chapeau { margin: 20px 0 0; }
+
+@media (max-width: 759px) {
+  .ouverture-video { height: 33svh; min-height: 210px; max-height: 270px; object-position: 50% 42%; }
+  .ouverture-voile { top: calc(min(max(33svh, 210px), 270px) - 70px); height: 71px; }
+  .ouverture-texte { margin-top: -30px; }
+  h1 { font-size: clamp(2.4rem, 10.5vw, 5.4rem); }
+  .ouverture .chapeau { font-size: 16px; }
+}
+
 /* Blocs */
 .bloc { padding: 56px 0 58px; }
 .col { max-width: calc(var(--colonne) + 2 * var(--gouttiere)); margin: 0 auto; padding: 0 var(--gouttiere); }
