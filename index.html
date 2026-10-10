@@ -34,8 +34,21 @@
     <div class="ouverture-texte">
       <p class="surtitre">Propriétaires · Essonne et alentours</p>
       <h1>Un toit, ça se refait une fois. <span>Autant bien le faire.</span></h1>
+      <!-- Question 1 du formulaire dès l'ouverture (10/10/2026) : le premier toucher est déjà une réponse,
+           puis la page descend au formulaire, question 2. Sans JavaScript, ce sont de simples liens vers le formulaire. -->
+      <div class="depart" role="group" aria-labelledby="depart-titre">
+        <p class="depart-titre" id="depart-titre"><small>Vérifiez votre projet · question 1 sur 6</small>Quels travaux&nbsp;?</p>
+        <div class="depart-choix">
+          <a href="#formulaire" data-travaux="Toiture à refaire">Toiture à refaire</a>
+          <a href="#formulaire" data-travaux="Fuite ou infiltration">Fuite ou infiltration</a>
+          <a href="#formulaire" data-travaux="Démoussage, traitement">Démoussage, traitement</a>
+          <a href="#formulaire" data-travaux="Isolation">Isolation</a>
+          <a href="#formulaire" data-travaux="Gouttières, zinguerie">Gouttières, zinguerie</a>
+          <a href="#formulaire" data-travaux="Fenêtre de toit">Fenêtre de toit</a>
+          <a href="#formulaire" data-travaux="Autre">Autre</a>
+        </div>
+      </div>
       <p class="chapeau">Cette page se lit en 2 minutes. Elle vous dit comment on travaille, à partir de combien, et si votre projet est fait pour nous. Si c'est le cas, on vous rappelle dans l'heure, ou vous choisissez vous-même votre rendez-vous.</p>
-      <a class="bouton bouton-rouge" href="#formulaire">Vérifier mon projet</a>
       <ul class="garanties">
         <li>Devis gratuit sous 48&nbsp;h</li>
         <li>Garantie décennale</li>
