@@ -37,7 +37,7 @@
       <!-- Question 1 du formulaire dès l'ouverture (10/10/2026) : le premier toucher est déjà une réponse,
            puis la page descend au formulaire, question 2. Sans JavaScript, ce sont de simples liens vers le formulaire. -->
       <div class="depart" role="group" aria-labelledby="depart-titre">
-        <p class="depart-titre" id="depart-titre"><small>Vérifiez votre projet · question 1 sur 6</small>Quels travaux&nbsp;?</p>
+        <p class="depart-titre" id="depart-titre"><small>Vérifiez votre projet · question 1 sur 5</small>Quels travaux&nbsp;?</p>
         <div class="depart-choix">
           <a href="#formulaire" data-travaux="Toiture à refaire">Toiture à refaire</a>
           <a href="#formulaire" data-travaux="Fuite ou infiltration">Fuite ou infiltration</a>
@@ -190,7 +190,7 @@
       <h2 data-reveal>Ce qui se passe après votre demande.</h2>
       <p class="intro" data-reveal>Pas de surprise&nbsp;: voici exactement la suite, du formulaire jusqu'à votre toit refait.</p>
       <ol class="chemin">
-        <li data-reveal><b>Vous répondez à 6 questions.</b> Une minute, en bas de cette page.</li>
+        <li data-reveal><b>Vous répondez à 5 questions.</b> Une minute, en bas de cette page.</li>
         <li data-reveal><b>Vous choisissez comment fixer la visite</b>&nbsp;:
           <div class="deux-voies">
             <div class="voie"><span class="voie-titre">On vous appelle</span><p>Dans l'heure (en journée). 5 minutes pour comprendre votre projet et fixer ensemble le jour de la visite.</p></div>
@@ -245,9 +245,9 @@
   <section id="formulaire" class="formulaire" aria-labelledby="titre-formulaire">
     <div class="formulaire-cadre">
       <h2 id="titre-formulaire">Votre projet est-il éligible&nbsp;?</h2>
-      <p class="formulaire-intro">6 questions, une minute. À la fin, vous choisissez&nbsp;: on vous rappelle dans l'heure, ou vous prenez votre rendez-vous vous-même.</p>
+      <p class="formulaire-intro">5 questions, une minute. À la fin, vous choisissez&nbsp;: on vous rappelle dans l'heure, ou vous prenez votre rendez-vous vous-même.</p>
       <div class="progression" aria-hidden="true"><span></span></div>
-      <p class="etape-compteur" aria-live="polite">Question 1 sur 6</p>
+      <p class="etape-compteur" aria-live="polite">Question 1 sur 5</p>
 
       <form id="demande" novalidate>
         <fieldset class="etape" data-etape="1">
@@ -285,18 +285,9 @@
           </div>
         </fieldset>
 
+        <!-- 10/10/2026 : plus de question budget (les gens annoncent moins pour ne pas trop payer,
+             et on ne chiffre pas un toit sans l'avoir vu). Le budget se voit à la visite. -->
         <fieldset class="etape" data-etape="4" hidden>
-          <legend>Quel budget prévoyez-vous pour ces travaux&nbsp;?</legend>
-          <div class="tuiles">
-            <label><input type="radio" name="budget" value="Moins de 2 000 €"><span>Moins de 2&nbsp;000&nbsp;€</span></label>
-            <label><input type="radio" name="budget" value="De 2 000 à 5 000 €"><span>De 2&nbsp;000 à 5&nbsp;000&nbsp;€</span></label>
-            <label><input type="radio" name="budget" value="De 5 000 à 10 000 €"><span>De 5&nbsp;000 à 10&nbsp;000&nbsp;€</span></label>
-            <label><input type="radio" name="budget" value="Plus de 10 000 €"><span>Plus de 10&nbsp;000&nbsp;€</span></label>
-            <label><input type="radio" name="budget" value="Je ne sais pas encore"><span>Je ne sais pas encore</span></label>
-          </div>
-        </fieldset>
-
-        <fieldset class="etape" data-etape="5" hidden>
           <legend>Comment fixer la visite&nbsp;?</legend>
           <div class="tuiles">
             <label><input type="radio" name="rdv" value="rappel"><span><b>On m'appelle dans l'heure</b><small>On fixe la visite ensemble au téléphone.</small></span></label>
@@ -312,7 +303,7 @@
           </div>
         </fieldset>
 
-        <fieldset class="etape" data-etape="6" hidden>
+        <fieldset class="etape" data-etape="5" hidden>
           <legend>Où vous joindre&nbsp;?</legend>
           <p class="rappel-rdv" hidden></p>
           <div class="duo">
