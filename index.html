@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#0B4A99">
 <link rel="preload" href="assets/fonts/BigShouldersDisplay-Black.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="assets/fonts/Manrope-Regular.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="assets/css/page.css">
+<link rel="stylesheet" href="assets/css/page.css?v=20261031">
 <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
@@ -312,6 +312,16 @@
           </div>
           <label for="tel">Téléphone</label>
           <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" maxlength="20">
+          <!-- 31/10/2026 : quand la personne réserve elle-même son créneau, on lui demande l'adresse de la visite.
+               Avec un rappel dans l'heure, l'adresse se prend au téléphone : ces champs restent cachés. -->
+          <div class="adresse-visite" hidden>
+            <label for="adresse">Adresse du logement <span class="aide">(pour la visite)</span></label>
+            <input id="adresse" name="adresse" autocomplete="address-line1" maxlength="120" placeholder="N° et rue">
+            <div class="duo">
+              <div><label for="cp">Code postal</label><input id="cp" name="cp" inputmode="numeric" autocomplete="postal-code" maxlength="6"></div>
+              <div><label for="ville">Ville</label><input id="ville" name="ville" autocomplete="address-level2" maxlength="60"></div>
+            </div>
+          </div>
           <label for="email">E-mail <span class="facultatif">(facultatif)</span></label>
           <input id="email" name="email" type="email" autocomplete="email" maxlength="120">
           <label for="precisions">Votre projet en une phrase <span class="facultatif">(facultatif)</span></label>
@@ -329,12 +339,12 @@
       <div class="merci" tabindex="-1" hidden>
         <span class="merci-coche" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         <h3>C'est noté, <span data-merci-prenom></span>.</h3>
-        <p class="merci-rdv" hidden>Votre demande de rendez-vous&nbsp;: <b data-merci-creneau></b>, chez vous. On vous appelle dans l'heure (en journée) pour le confirmer.</p>
+        <p class="merci-rdv" hidden>Votre demande de rendez-vous&nbsp;: <b data-merci-creneau></b>, <span data-merci-lieu>chez vous</span>. On vous appelle dans l'heure (en journée) pour le confirmer.</p>
         <p class="merci-rappel">On vous appelle dans l'heure (en journée) au <b data-merci-tel></b> pour fixer ensemble le jour de la visite.</p>
         <ul class="merci-liste">
           <li><b>Décrochez</b>&nbsp;: l'appel vient du 06&nbsp;50&nbsp;60&nbsp;17&nbsp;96. <a href="assets/lcr-couverture.vcf" download>Enregistrer ce numéro</a></li>
           <li><b>Le jour de la visite</b>, soyez là, vous ou un proche majeur, pour nous ouvrir et nous montrer l'accès aux combles.</li>
-          <li><b>Gardez sous la main</b> l'adresse du logement et, si vous pouvez, une photo du toit.</li>
+          <li data-merci-garder><b>Gardez sous la main</b> l'adresse du logement et, si vous pouvez, une photo du toit.</li>
         </ul>
       </div>
     </div>
@@ -359,6 +369,6 @@
   </div>
 </div>
 <script src="assets/js/pixel.js" defer></script>
-<script src="assets/js/page.js" defer></script>
+<script src="assets/js/page.js?v=20261031" defer></script>
 </body>
 </html>
