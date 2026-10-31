@@ -122,6 +122,12 @@
   const agendaOk = form.querySelector(".agenda-ok");
   const rappelRdv = form.querySelector(".rappel-rdv");
   let creneauChoisi = "";
+  // 31/10/2026 : l'adresse de la visite, demandée seulement quand la personne réserve elle-même son créneau
+  const blocAdresse = form.querySelector(".adresse-visite");
+  // Sans le bloc dans la page (ancienne version gardée en cache), on ne demande rien : la demande part comme avant
+  const adresseDemandee = () => !!blocAdresse && valeur("rdv") === "creneau" && !!creneauChoisi;
+  const cpSaisi = () => champ("cp").replace(/\s/g, "");
+  const adresseSaisie = () => [champ("adresse"), [cpSaisi(), champ("ville")].filter(Boolean).join(" ")].filter(Boolean).join(", ");
   const OU_DEPT = { "75": "à Paris", "77": "en Seine-et-Marne", "78": "dans les Yvelines", "91": "en Essonne", "92": "dans les Hauts-de-Seine", "93": "en Seine-Saint-Denis", "94": "dans le Val-de-Marne", "95": "dans le Val-d'Oise" };
   let courante = 1;
 
@@ -150,6 +156,7 @@
         ? `Votre rendez-vous&nbsp;: <b>${creneauChoisi}</b>, chez vous. On vous appelle pour le confirmer.`
         : "On vous appelle dans l'heure (en journée) pour fixer ensemble le jour de la visite.";
       montrer(rappelRdv, true);
+      montrer(blocAdresse, !!soi);
       setTimeout(() => form.querySelector("#prenom")?.focus({ preventScroll: true }), calme ? 0 : 330);
     }
   }
@@ -263,6 +270,12 @@
     if (!champ("prenom")) return signaler("Indiquez votre prénom.", form.querySelector("#prenom"));
     const tel = telNormal(champ("tel"));
     if (!tel) return signaler("Ce numéro ne semble pas complet : 10 chiffres, par exemple 06 12 34 56 78.", form.querySelector("#tel"));
+    // 31/10/2026 : créneau réservé → l'adresse de la visite est obligatoire
+    if (adresseDemandee()) {
+      if (champ("adresse").length < 4) return signaler("Indiquez l'adresse du logement, pour la visite.", form.querySelector("#adresse"));
+      if (!/^\d{5}$/.test(cpSaisi())) return signaler("Le code postal doit faire 5 chiffres, par exemple 91200.", form.querySelector("#cp"));
+      if (!champ("ville")) return signaler("Indiquez la ville du logement.", form.querySelector("#ville"));
+    }
     const email = champ("email");
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return signaler("Cette adresse e-mail ne semble pas valide.", form.querySelector("#email"));
     if (!form.present.checked) return signaler("Cochez l'engagement : décrocher à l'appel et être présent le jour de la visite.");
@@ -279,6 +292,7 @@
         "Travaux": valeur("travaux"),
         "Délai": valeur("delai"),
         "Rendez-vous": valeur("rdv") === "creneau" && creneauChoisi ? `Créneau choisi : ${creneauChoisi}` : "Rappel dans l'heure pour fixer la visite",
+        "Adresse": adresseDemandee() ? adresseSaisie() : "",   // vide avec un rappel : la fonction ne garde pas les réponses vides
         "Présence": "S'engage à décrocher et à être présent le jour de la visite",
         "Précisions": champ("precisions"),
         "Provenance": "Page avant formulaire",
@@ -307,6 +321,12 @@
     merci.querySelector("[data-merci-tel]").textContent = tel ? telAffiche(telNormal(tel) || tel) : "numéro indiqué";
     const soi = valeur("rdv") === "creneau" && creneauChoisi;
     merci.querySelector("[data-merci-creneau]").textContent = creneauChoisi;
+    // 31/10/2026 : on redonne l'adresse saisie, pour que la personne repère une faute de frappe
+    const adresse = adresseDemandee() ? adresseSaisie() : "";
+    const lieu = merci.querySelector("[data-merci-lieu]");
+    if (lieu && adresse) { const b = document.createElement("b"); b.textContent = adresse; lieu.replaceChildren("au ", b); }
+    const garder = merci.querySelector("[data-merci-garder]");
+    if (garder && adresse) garder.innerHTML = "<b>Gardez sous la main</b>, si vous pouvez, une photo du toit.";
     montrer(merci.querySelector(".merci-rdv"), !!soi);
     montrer(merci.querySelector(".merci-rappel"), !soi);
     form.hidden = true;
