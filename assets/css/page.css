@@ -240,7 +240,10 @@ legend { display: block; padding: 0; margin-bottom: 14px; font: 800 21px/1.3 "Ma
 .etape > label, .duo label { display: block; font-weight: 800; color: var(--encre); margin: 14px 0 6px; }
 .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .duo label { margin-top: 0; }
-.facultatif { font-weight: 400; color: var(--gris); }
+.facultatif, .aide { font-weight: 400; color: var(--gris); }
+/* 31/10/2026 : adresse de la visite, quand la personne réserve elle-même son créneau */
+.adresse-visite > label { display: block; font-weight: 800; color: var(--encre); margin: 14px 0 6px; }
+.adresse-visite .duo { margin-top: 14px; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
 input[type="text"], input:not([type]), input[type="tel"], input[type="email"], textarea {
   width: 100%; font: 400 17px/1.4 "Manrope", sans-serif; color: var(--encre); padding: 12px 14px; min-height: 50px;
   border: 1.5px solid #CCD4E4; border-radius: 10px; background: #fff; transition: border-color 160ms ease, box-shadow 160ms ease;
